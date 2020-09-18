@@ -13,5 +13,5 @@ mkdir ~/.gf
 #sudo pacman -S nmap xsltrpoc
 sudo apt install nmap xsltproc
 cp configs/subfinder.yaml ~/.config/subfinder/config.yaml
-cp resources/kenzer-templates/urlenum/* ~/.gf/
+cp resources/kenzer-templates/gf/* ~/.gf/
 ./run.sh
