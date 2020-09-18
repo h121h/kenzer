@@ -1,0 +1,6 @@
+spacy
+setuptools
+zulip
+chatterbot
+chatterbot-corpus
+mmh3
