@@ -67,7 +67,7 @@ class Enumerator:
         self.shuffsolv(subs, domain)
         output = path+"/portenum.kenz"
         subs = path+"/shuffsolv.log"
-        os.system("sudo NXScan --only-enumerate -l {0} -o {1} -p top-1000".format(subs,path+"/nxscan"))
+        os.system("sudo NXScan --only-enumerate -l {0} -o {1}".format(subs,path+"/nxscan"))
         os.system("cp {0}/enum.txt {1}".format(path+"/nxscan", output))
         return("completed portenum for: "+domain)
 
