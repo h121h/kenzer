@@ -10,7 +10,7 @@ sudo python3 -m spacy download en
 mkdir ~/.config
 mkdir ~/.config/subfinder
 mkdir ~/.gf
-#sudo pacman -S nmap xsltrpoc
+#sudo pacman -S nmap xsltproc
 sudo apt install nmap xsltproc
 cp configs/subfinder.yaml ~/.config/subfinder/config.yaml
 cp resources/kenzer-templates/gf/* ~/.gf/

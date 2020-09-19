@@ -121,6 +121,7 @@ class Enumerator:
     #"removes wildcard domains"
     def shuffledns(self):
         self.getresolvers()
+        self.generateSubdomainsWordist()
         domain = self.domain
         path = self.path
         output = path+"/shuffledns.log"
