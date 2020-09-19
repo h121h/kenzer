@@ -9,7 +9,7 @@ class Enumerator:
         self.domain = domain
         self.organization = domain.replace(".","")
         self.path = db+self.organization
-        self.resources = kenzer+"resources/"
+        self.resources = kenzer+"resources"
         self.githubapi=github
         if(os.path.exists(self.path) == False):
             os.system("mkdir "+self.path)
