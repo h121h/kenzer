@@ -95,7 +95,7 @@ class Enumerator:
         os.system("shuffledns -r {3}/resolvers.txt -wt 50 -o {0} -v -list {1} -d {2}".format(path, domains, domain,self.resources))
         return
 
-    #enumerates subdomains using gitdomain
+    #enumerates subdomains using github-subdomains
     def gitdomain(self):
         domain = self.domain
         path = self.path
@@ -103,7 +103,7 @@ class Enumerator:
         output = path+"/gitdomain.log"
         if(os.path.exists(output)):
             os.system("mv {0} {0}.old".format(output))
-        os.system("gitdomain -d {1} -t {2} > {0}".format(output, domain, api))
+        os.system("github-subdomains -d {1} -t {2} > {0}".format(output, domain, api))
         return
 
     #enumerates subdomains using subfinder
@@ -156,7 +156,7 @@ class Enumerator:
         self.httpx(inp, out)
         return
     
-    #enumerates urls using giturl, filters using gf & probes using httpx
+    #enumerates urls using github-endpoints, filters using gf & probes using httpx
     def giturl(self):
         domain = self.domain
         path = self.path
@@ -164,7 +164,7 @@ class Enumerator:
         api = self.githubapi
         if(os.path.exists(path)):
             os.system("mv {0} {0}.old".format(path))
-        os.system("giturl -a -t {2} -d {1} > {0}".format(path, domain, api))
+        os.system("github-endpoints -a -t {2} -d {1} > {0}".format(path, domain, api))
         out = self.path+"/giturlModP.log"
         os.system("cat {0} | gf params | sed 's/=[^&]*/=ALTER/g' | sort -u > {1}".format(path, out))
         inp=out
