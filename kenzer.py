@@ -59,7 +59,7 @@ class Kenzer(object):
         self.chatbot = ChatBot("Kenzer")
         self.trainer = ChatterBotCorpusTrainer(self.chatbot)
         self.trainer.train("chatterbot.corpus.english")    
-        self.modules=["subenum", "webenum", "portenum", "urlenum", "favscan", "idscan", "subscan", "cvescan", "vulnscan", "portscan", "parascan", "endscan", "buckscan", "enum", "scan", "recon", "hunt", "remlog"]
+        self.modules=["subenum", "webenum", "portenum", "asnenum", "urlenum", "favscan", "idscan", "subscan", "cvescan", "vulnscan", "portscan", "parascan", "endscan", "buckscan", "enum", "scan", "recon", "hunt", "remlog"]
         print(YELLOW+"[*] KENZER is online"+CLEAR)
         print(YELLOW+"[*] {0} modules up & running".format(len(self.modules))+CLEAR)
 
@@ -80,6 +80,7 @@ class Kenzer(object):
         message +="  `subenum` - enumerates subdomains\n"
         message +="  `webenum` - enumerates webservers\n"
         message +="  `portenum` - enumerates open ports\n"
+        message +="  `asnenum` - enumerates asn\n"
         message +="  `urlenum` - enumerates urls\n"
         message +="  `subscan` - hunts for subdomain takeovers\n"
         message +="  `cvescan` - hunts for CVEs\n"
@@ -111,6 +112,8 @@ class Kenzer(object):
             message ="`kenzer webenum <domain>` - probes web servers for enumerated subdomains of the given domain\n"
         elif module == "portenum":
             message ="`kenzer portenum <domain>` - enumerates open ports for enumerated subdomains of the given domain\n"
+        elif module == "asnenum":
+            message ="`kenzer asnenum <domain>` - enumerates asn for enumerated subdomains of the given domain\n"
         elif module == "urlenum":
             message ="`kenzer urlenum <domain>` - enumerates urls of the given domain\n"
         elif module == "subscan":
@@ -205,6 +208,17 @@ class Kenzer(object):
             self.sendMessage(message)
             if self.upload:
                 self.uploader(self.content[i], "webenum.kenz")
+        return
+    
+    #enumerates asn for enumerated subdomains
+    def asnenum(self):
+        for i in range(2,len(self.content)):
+            self.sendMessage("started asnenum for: "+self.content[i].lower())
+            self.enum = enumerator.Enumerator(self.content[i].lower(), _kenzerdb, _kenzer)
+            message = self.enum.asnenum()
+            self.sendMessage(message)
+            if self.upload:
+                self.uploader(self.content[i], "asnenum.kenz")
         return
     
     #enumerates open ports
@@ -331,6 +345,7 @@ class Kenzer(object):
         self.subenum()
         self.webenum()
         self.portenum()
+        self.asnenum()
         self.urlenum()
         return
 
@@ -359,6 +374,7 @@ class Kenzer(object):
         self.portscan()
         self.cvescan()
         self.vulnscan()
+        self.asnenum()
         self.urlenum()
         self.parascan()
         #self.endscan()
@@ -402,6 +418,8 @@ class Kenzer(object):
                 self.subenum()
             elif content[1].lower() == "webenum":
                 self.webenum()
+            elif content[1].lower() == "asnenum":
+                self.asnenum()
             elif content[1].lower() == "favscan":
                 self.favscan()
             elif content[1].lower() == "portenum":

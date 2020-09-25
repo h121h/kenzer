@@ -70,7 +70,17 @@ class Enumerator:
         os.system("sudo NXScan --only-enumerate -l {0} -o {1}".format(subs,path+"/nxscan"))
         os.system("cp {0}/enum.txt {1}".format(path+"/nxscan", output))
         return("completed portenum for: "+domain)
-
+    
+    #enumerates asn using domlock
+    def asnenum(self):
+        domain = self.domain
+        path = self.path
+        subs = path+"/subenum.kenz"
+        if(os.path.exists(subs) == False):
+            return("run subenum for: "+domain)
+        output = path+"/asnenum.kenz"
+        os.system("domlock -l {0} -o {1}".format(subs, output))
+        return("completed asnenum for: "+domain)
 
     #helper modules
 
