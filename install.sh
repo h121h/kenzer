@@ -1,4 +1,5 @@
 mkdir resources
+git clone https://github.com/ARPSyndicate/kenzerdb.git
 cd resources
 git clone https://github.com/ARPSyndicate/kenzer-bin.git
 git clone https://github.com/ARPSyndicate/kenzer-templates.git

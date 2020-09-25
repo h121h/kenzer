@@ -75,7 +75,7 @@ class Kenzer(object):
 
     #manual
     def man(self):
-        message = "**KENZER[2.0]**\n"
+        message = "**KENZER[2.2]**\n"
         message +="**KENZER modules**\n"
         message +="  `subenum` - enumerates subdomains\n"
         message +="  `webenum` - enumerates webservers\n"
