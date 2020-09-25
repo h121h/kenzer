@@ -141,7 +141,7 @@ class Scanner:
     def favscan(self):
         domain = self.domain
         path = self.path
-        out = path+"/favinizer.kenz"
+        out = path+"/favscan.kenz"
         subs = path+"/webenum.kenz"
         if(os.path.exists(subs) == False):
             return("run webenum for: "+self.domain)
