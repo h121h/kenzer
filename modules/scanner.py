@@ -25,7 +25,7 @@ class Scanner:
     
     #runs jaeles
     def jaeles(self, template, hosts, output):
-        os.system("jaeles scan --retry 2 --no-background -c 70 -s {3}jaeles/{0}/.* --timeout 7 -U {1} -O {2} -o {4} -v ".format(template, hosts, output, self.templates, self.path+"/jaeles-raw-output"))
+        os.system("jaeles scan --retry 2 --no-background -c 70 -s {3}jaeles/{0}/ --timeout 7 -U {1} -O {2} -v ".format(template, hosts, output, self.templates))
         return
 
     #core modules
