@@ -144,6 +144,8 @@ class Enumerator:
         os.system("shuffledns -strict-wildcard -wt 20 -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
         self.shuffsolv(output, domain)
         os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
+        self.shuffsolv(output, domain)
+        os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
         return 
 
     #probes for web servers using httpx
