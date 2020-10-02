@@ -106,7 +106,7 @@ class Enumerator:
         path+="/shuffsolv.log"
         if(os.path.exists(path)):
             os.system("rm {0}".format(path))
-        os.system("shuffledns -r {3}/resolvers.txt -o {0} -v -list {1} -d {2}".format(path, domains, domain,self.resources))
+        os.system("shuffledns -strict-wildcard -r {3}/resolvers.txt -o {0} -v -list {1} -d {2}".format(path, domains, domain,self.resources))
         return
 
     #enumerates subdomains using github-subdomains
@@ -141,7 +141,7 @@ class Enumerator:
         output = path+"/shuffledns.log"
         if(os.path.exists(output)):
             os.system("mv {0} {0}.old".format(output))
-        os.system("shuffledns -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
+        os.system("shuffledns -strict-wildcard -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
         self.shuffsolv(output, domain)
         os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
         return 
