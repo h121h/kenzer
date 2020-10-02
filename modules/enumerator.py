@@ -140,7 +140,7 @@ class Enumerator:
         path = self.path
         output = path+"/shuffledns.log"
         if(os.path.exists(output)):
-            os.system("mv {0} {0}.old".format(output))
+            os.system("rm {0}".format(output))
         os.system("shuffledns -strict-wildcard -wt 20 -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
         self.shuffsolv(output, domain)
         os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
