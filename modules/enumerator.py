@@ -67,8 +67,10 @@ class Enumerator:
         self.shuffsolv(subs, domain)
         output = path+"/portenum.kenz"
         subs = path+"/shuffsolv.log"
+        if(os.path.exists(output)):
+            os.system("mv {0} {0}.old".format(output))
         os.system("sudo NXScan --only-enumerate -l {0} -o {1}".format(subs,path+"/nxscan"))
-        os.system("cp {0}/enum.txt {1}".format(path+"/nxscan", output))
+        os.system("cat {0}/nxscan/enum.txt {0}/portenum.kenz* | sort -u > {1}".format(path, output))
         return("completed portenum for: "+domain)
     
     #enumerates asn using domlock
@@ -79,6 +81,8 @@ class Enumerator:
         if(os.path.exists(subs) == False):
             return("run subenum for: "+domain)
         output = path+"/asnenum.kenz"
+        if(os.path.exists(output)):
+            os.system("rm {0}".format(output))
         os.system("domlock -l {0} -o {1}".format(subs, output))
         return("completed asnenum for: "+domain)
 
