@@ -346,7 +346,8 @@ class Kenzer(object):
         self.webenum()
         self.portenum()
         self.asnenum()
-        self.urlenum()
+        #experimental ones
+        #self.urlenum()
         return
 
     #runs all scanning modules
@@ -358,8 +359,9 @@ class Kenzer(object):
         self.buckscan()
         self.cvescan()
         self.vulnscan()
-        self.parascan()
-        self.endscan()
+        #experimental ones
+        #self.parascan()
+        #self.endscan()
         return
 
     #define your custom workflow    
@@ -375,8 +377,9 @@ class Kenzer(object):
         self.cvescan()
         self.vulnscan()
         self.asnenum()
-        self.urlenum()
-        self.parascan()
+        #experimental ones
+        #self.urlenum()
+        #self.parascan()
         #self.endscan()
         #self.remlog()
 

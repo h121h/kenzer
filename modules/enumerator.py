@@ -27,7 +27,7 @@ class Enumerator:
         if(os.path.exists(output)):
             self.shuffsolv(output, domain)
             os.system("mv {1} {0}".format(output, path+"/shuffsolv.log"))
-        os.system("cat {0}/subfinder.log* {0}/subenum.kenz* {0}/shuffledns.log* {0}/gitdomain.log* | sort -u > {1}".format(path, output))
+        os.system("cat {0}/subfinder.log {0}/subenum.kenz* {0}/shuffledns.log {0}/gitdomain.log | sort -u > {1}".format(path, output))
         return("completed subenum for: "+domain) 
     
     #enumerates webservers
@@ -42,6 +42,8 @@ class Enumerator:
             os.system("mv {0} {0}.old".format(output))
         self.httpx(subs, output)
         output = path+"/webenum.kenz"
+        if(os.path.exists(output)):
+            os.system("mv {0} {0}.old".format(output))
         os.system("cat {0}/httpx.log {0}/webenum.kenz* | cut -d' ' -f 1 | sort -u > {1}".format(path, output))
         return("completed webenum for: "+domain) 
 
@@ -106,7 +108,7 @@ class Enumerator:
         path+="/shuffsolv.log"
         if(os.path.exists(path)):
             os.system("rm {0}".format(path))
-        os.system("shuffledns -strict-wildcard -wt 20 -r {3}/resolvers.txt -o {0} -v -list {1} -d {2}".format(path, domains, domain,self.resources))
+        os.system("shuffledns -strict-wildcard -wt 50 -r {3}/resolvers.txt -o {0} -v -list {1} -d {2}".format(path, domains, domain,self.resources))
         return
 
     #enumerates subdomains using github-subdomains
@@ -141,9 +143,7 @@ class Enumerator:
         output = path+"/shuffledns.log"
         if(os.path.exists(output)):
             os.system("rm {0}".format(output))
-        os.system("shuffledns -strict-wildcard -wt 20 -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
-        self.shuffsolv(output, domain)
-        os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
+        os.system("shuffledns -strict-wildcard -wt 50 -r {2}/resolvers.txt -w {2}/subdomains.txt -o {0} -v -d {1}".format(output, domain, self.resources))
         self.shuffsolv(output, domain)
         os.system("rm {0} && mv {1} {0}".format(output, path+"/shuffsolv.log"))
         return 
