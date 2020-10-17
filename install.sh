@@ -3,7 +3,6 @@ git clone https://github.com/ARPSyndicate/kenzerdb.git
 cd resources
 git clone https://github.com/ARPSyndicate/kenzer-bin.git
 git clone https://github.com/ARPSyndicate/kenzer-templates.git
-git clone https://github.com/ARPSyndicate/SecLists.git
 sudo cp kenzer-bin/* /usr/bin/
 cd ..
 pip3 install -U -r requirements.txt

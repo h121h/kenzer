@@ -98,8 +98,9 @@ class Enumerator:
         os.system("wget -q https://public-dns.info/nameservers.txt -O {0}".format(output))
     
     def generateSubdomainsWordist(self):
+        os.system("cd {0} && wget https://raw.githubusercontent.com/internetwache/CT_subdomains/master/top-100000.txt".format(self.resources))
         output = self.resources+"/subdomains.txt"
-        os.system("cat {0}/SecLists/Discovery/DNS/* | sort -u > {1}".format(self.resources, output))
+        os.system("cat {0}/top-100000.txt | cut -d "," -f 2 | sort -u > {1}".format(self.resources, output))
 
     #resolves & removes wildcard subdomains using shuffledns
     def shuffsolv(self, domains, domain):
