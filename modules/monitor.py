@@ -6,7 +6,7 @@ class Monitor:
     
     #initializations
     def __init__(self, domains, db):
-        self.domain = domain
+        self.domains = domains
         self.organization = "monitor"
         self.path = db+self.organization
         if(os.path.exists(self.path) == False):
