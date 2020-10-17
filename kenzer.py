@@ -197,7 +197,7 @@ class Kenzer(object):
     #monitors ct logs
     def monitor(self):
         self.sendMessage("started monitoring")
-        self.monitor = monitor.Monitor(" ".join(self.content), _kenzerdb)
+        self.monitor = monitor.Monitor(" ".join(self.content[2:]), _kenzerdb)
         self.monitor.certex()
         return
 
