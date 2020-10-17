@@ -10,6 +10,7 @@ from configparser import ConfigParser
 #core modules
 from modules import enumerator
 from modules import scanner
+from modules import monitor
 
 #colors
 BLUE='\033[94m'
@@ -24,15 +25,17 @@ try:
     config = ConfigParser()
     with open(conf) as f:
          config.read_file(f, conf)
-    _BotMail=config.get("zulip", "email")
-    _Site=config.get("zulip", "site")
-    _APIKey=config.get("zulip", "key")
-    _uploads=config.get("zulip", "uploads")
-    _subscribe=config.get("zulip", "subscribe")
-    _kenzer=config.get("env", "kenzer")
-    _kenzerdb=config.get("env", "kenzerdb")
+    _BotMail=config.get("kenzer", "email")
+    _Site=config.get("kenzer", "site")
+    _APIKey=config.get("kenzer", "key")
+    _uploads=config.get("kenzer", "uploads")
+    _subscribe=config.get("kenzer", "subscribe")
+    _kenzer=config.get("kenzer", "path")
+    _kenzerdb=config.get("kenzerdb", "path")
+    _github=config.get("kenzerdb", "token")
+    _repo=config.get("kenzerdb", "repo")
+    _user=config.get("kenzerdb", "user")
     _home=config.get("env", "home")
-    _github=config.get("env", "github")
     os.chdir(_kenzer)
     os.environ["HOME"] = _home
     if(os.path.exists(_kenzerdb) == False):
@@ -45,7 +48,7 @@ class Kenzer(object):
     
     #initializations
     def __init__(self):
-        print(BLUE+"KENZER[2.2] by glatisant"+CLEAR)
+        print(BLUE+"KENZER[2.3] by glatisant"+CLEAR)
         print(YELLOW+"automated web assets enumeration & scanning"+CLEAR)
         self.client = zulip.Client(email=_BotMail, site=_Site, api_key=_APIKey)
         self.upload=False
@@ -59,7 +62,7 @@ class Kenzer(object):
         self.chatbot = ChatBot("Kenzer")
         self.trainer = ChatterBotCorpusTrainer(self.chatbot)
         self.trainer.train("chatterbot.corpus.english")    
-        self.modules=["subenum", "webenum", "portenum", "asnenum", "urlenum", "favscan", "idscan", "subscan", "cvescan", "vulnscan", "portscan", "parascan", "endscan", "buckscan", "enum", "scan", "recon", "hunt", "remlog"]
+        self.modules=["monitor", "subenum", "webenum", "portenum", "asnenum", "urlenum", "favscan", "idscan", "subscan", "cvescan", "vulnscan", "portscan", "parascan", "endscan", "buckscan", "enum", "scan", "recon", "hunt", "remlog"]
         print(YELLOW+"[*] KENZER is online"+CLEAR)
         print(YELLOW+"[*] {0} modules up & running".format(len(self.modules))+CLEAR)
 
@@ -75,8 +78,9 @@ class Kenzer(object):
 
     #manual
     def man(self):
-        message = "**KENZER[2.2]**\n"
+        message = "**KENZER[2.3]**\n"
         message +="**KENZER modules**\n"
+        message +="  `monitor` - monitors ct logs for new subdomains\n"
         message +="  `subenum` - enumerates subdomains\n"
         message +="  `webenum` - enumerates webservers\n"
         message +="  `portenum` - enumerates open ports\n"
@@ -106,7 +110,9 @@ class Kenzer(object):
     
     #modules manual
     def manModule(self, module):
-        if module == "subenum":
+        if module == "monitor":
+            message ="`kenzer monitor <domain>` - monitors ct logs for new subdomains of the given domain\n"
+        elif module == "subenum":
             message ="`kenzer subenum <domain>` - enumerates subdomains of the given domain\n"
         elif module == "webenum":
             message ="`kenzer webenum <domain>` - probes web servers for enumerated subdomains of the given domain\n"
@@ -187,6 +193,13 @@ class Kenzer(object):
         )
         self.sendMessage("{0}/{1} : {3}{2}".format(org, raw, uploaded['uri'], _Site))
         print(uploaded)
+
+    #monitors ct logs
+    def monitor(self):
+        self.sendMessage("started monitoring for: "+self.content)
+        self.monitor = monitor.Monitor(self.content)
+        self.monitor.certex()
+        return
 
     #enumerates subdomains
     def subenum(self):
@@ -416,7 +429,9 @@ class Kenzer(object):
                     self.manModule(content[2])
                 else:
                     message = "excuse me???"
-                    self.sendMessage(message)    
+                    self.sendMessage(message)
+            elif content[1].lower() == "monitor":
+                self.monitor()    
             elif content[1].lower() == "subenum":
                 self.subenum()
             elif content[1].lower() == "webenum":
@@ -455,6 +470,9 @@ class Kenzer(object):
                 self.recon()
             elif content[1].lower() == "remlog":
                 self.remlog()
+            elif content[1].lower() == "sync":
+                os.system("cd {0} && git remote set-url origin https://{1}@github.com/{2}/{3}.git && git pull && git add . && git commit -m updated && git push".format(_kenzerdb, _github, _user, _repo))
+                self.sendMessage("sync complete")
             elif content[1].lower() == "upload":
                 self.upload = not self.upload
                 self.sendMessage("upload: "+str(self.upload))
