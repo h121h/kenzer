@@ -20,12 +20,12 @@ class Scanner:
 
     #runs nuclei
     def nuclei(self, template, hosts, output):
-        os.system("nuclei -pbar -retries 2 -bulk-size 70 -t {3}nuclei/{0} -v -timeout 7 -l {1} -o {2}".format(template, hosts, output, self.templates))
+        os.system("nuclei -pbar -retries 2 -bulk-size 40 -t {3}nuclei/{0} -v -timeout 7 -l {1} -o {2}".format(template, hosts, output, self.templates))
         return
     
     #runs jaeles
     def jaeles(self, template, hosts, output):
-        os.system("jaeles scan --retry 2 --no-background -c 70 -s {3}jaeles/{0}/ --timeout 7 -U {1} -O {2} -v ".format(template, hosts, output, self.templates))
+        os.system("jaeles scan --retry 2 --no-background -c 40 -s {3}jaeles/{0}/ --timeout 7 -U {1} -O {2} -v ".format(template, hosts, output, self.templates))
         return
 
     #core modules

@@ -48,7 +48,7 @@ class Kenzer(object):
     
     #initializations
     def __init__(self):
-        print(BLUE+"KENZER[2.3] by glatisant"+CLEAR)
+        print(BLUE+"KENZER[2.3] by ARPSyndicate"+CLEAR)
         print(YELLOW+"automated web assets enumeration & scanning"+CLEAR)
         self.client = zulip.Client(email=_BotMail, site=_Site, api_key=_APIKey)
         self.upload=False
